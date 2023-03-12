@@ -57,7 +57,7 @@ class DateInput(forms.DateInput):
 class SchemeUpdate(LoginRequiredMixin,UpdateView):
     model = Schemes
     template_name = 'editor/schemes_form.html'
-    fields = ['title','name','brief','eligibility','references','slug','tags','details','category','subcategory','openDate','closeDate','image']
+    fields = ['title','name','brief','eligibility','references','tags','details','category','openDate','closeDate','image']
     success_url = reverse_lazy('updatescheme')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,7 +65,9 @@ class SchemeUpdate(LoginRequiredMixin,UpdateView):
         return context
     def get_form(self,form_class=None):
         form = super(SchemeUpdate,self).get_form(form_class)
-        # form.fields['category'].widget = forms.TextInput(attrs={"data-role":"tagsinput"})
+        form.fields['category'].widget.attrs.update({"data-role":"tagsinput"})
+        form.fields['tags'].widget.attrs.update({"data-role":"tagsinput"})
+        # form.fields['subcategory'].widget.attrs.update({"data-role":"tagsinput"})
         form.fields['openDate'].widget = DateInput()
         form.fields['closeDate'].widget = DateInput()
         return form
@@ -76,12 +78,13 @@ class SchemeUpdate(LoginRequiredMixin,UpdateView):
 class SchemeAdd(LoginRequiredMixin,CreateView):
     model = Schemes
     template_name = 'editor/schemes_form.html'
-    fields = ['title','name','brief','eligibility','references','slug','tags','details','category','subcategory','openDate','closeDate','image']
+    fields = ['title','name','brief','eligibility','references','tags','details','category','openDate','closeDate','image']
     # category = Tags.objects.all()
     # success_url = reverse_lazy('tasks')
     success_url = reverse_lazy('editor')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
         context['category'] = Category.objects.all()
         context['title']='Add Scheme'
         # search_input = self.request.GET.get('search-area') or ''
@@ -91,7 +94,9 @@ class SchemeAdd(LoginRequiredMixin,CreateView):
         return context
     def get_form(self,form_class=None):
         form = super(SchemeAdd,self).get_form(form_class)
-        form.fields['category'].widget = forms.TextInput(attrs={"data-role":"tagsinput"})
+        form.fields['category'].widget.attrs.update({"data-role":"tagsinput"})
+        form.fields['tags'].widget.attrs.update({"data-role":"tagsinput"})
+        # form.fields['subcategory'].widget.attrs.update({"data-role":"tagsinput"})
         form.fields['openDate'].widget = DateInput()
         form.fields['closeDate'].widget = DateInput()
         return form

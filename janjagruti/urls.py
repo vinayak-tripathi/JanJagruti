@@ -21,7 +21,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",include('schemes.urls')),
-    path("",include('editor.urls'))
+    path("",include('editor.urls')),
+    path("",include('profiles.urls'))
+
 ]
 
 if settings.DEBUG:

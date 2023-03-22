@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     'ckeditor',
     'editor',
     'profiles',
+    'news'
 ]
-# CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap', 'uni_form', 'bootstrap3', 'foundation-5')
-# CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -73,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'news.news_context_processors.loadTopThreeNews',
             ],
         },
     },

@@ -22,8 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("",include('schemes.urls')),
     path("",include('editor.urls')),
-    path("",include('profiles.urls'))
-
+    path("",include('profiles.urls')),
+    path("",include('news.urls'))
 ]
 
 if settings.DEBUG:

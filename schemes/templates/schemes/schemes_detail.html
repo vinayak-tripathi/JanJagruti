@@ -5,7 +5,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 mb-5 mb-lg-0">
-        <article class="row mb-5 card p-5" id="title">
+        <article class="row mb-4 card p-4 rounded-lg shadow border" id="title">
           <div class="col-md-12">
             <h3>{{ object.name}}</h3>
             <ul class="list-inline post-meta mb-3">
@@ -34,7 +34,7 @@
         </article>
         <div id="details">
           <h4>Details</h4>
-          <article class="row mb-5 card p-5">
+          <article class="row mb-4 card p-4 rounded-lg shadow-sm">
             <div class="col-md-12">
               <p>{{ object.details|safe }}</p>
             </div>
@@ -42,8 +42,8 @@
         </div>
         {% comment %} benefit {% endcomment %}
         <div>
-          <h4>Benifits</h4>
-          <article class="row mb-5 card p-5">
+          <h4>Benefits</h4>
+          <article class="row mb-4 card p-4 rounded-lg shadow-sm">
             <div class="col-md-12">
               <p>
                 For death: Natural causes – ₹20,000; and Accident – ₹50,000. For
@@ -59,7 +59,7 @@
         {% comment %} Eligibility {% endcomment %}
         <div id="eligibility">
           <h4>Eligibility</h4>
-          <article class="row mb-5 card p-5">
+          <article class="row mb-4 card p-4 rounded-lg shadow-sm">
             <div class="col-md-12">
               <p>{{object.eligibility|safe}}</p>
             </div>
@@ -67,34 +67,32 @@
         </div>
         <div id="sources">
           <h4>Documents Required</h4>
-          <article class="row mb-5 card p-5">
+          <article class="row mb-4 card p-4 rounded-lg shadow-sm">
             <div class="col-md-12">
               <p>
-                A group insurance scheme by MoMSME for khadi artisans (spinners
-                and weavers). The scheme provides insurance cover against normal
-                death, accidental death, permanent or partial disability of the
-                insured artisan. Scholarships are provided to the insurer’s
-                children studying in class 9th to 12th. The artisan must be
-                member of the approved vocation / occupation groups. This scheme
-                was formulated by Khadi and Village Industries Commission (KVIC)
-                in association with the Life Insurance Corporation of India
-                (LIC).
+                {{object.references|safe}}
               </p>
             </div>
           </article>
         </div>
         <div id="image">
           <h4>Reference</h4>
-          <article class="row mb-5 card p-5">
+          <article class="row mb-4 card p-4 rounded-lg shadow-sm">
             <div class="col-md-12">
             {% if object.image %}
-            <img class="rounded" src="{{ object.image.url }}" width = '400px'>
+            <img class="img-fluid rounded" src="{{ object.image.url }}" width = '400px'>
             {%else%} Not Mention{%endif%}
             </div>
           </article>
         </div>
       </div>
-      <aside class="col-lg-4">
+      <aside class="col-lg-4" style="
+          position: sticky;
+          align-self: flex-start;
+          top: 100px;
+          height: fit-content;
+          overflow: auto;"
+      >
         <!-- Search -->
 
         <!-- categories -->
@@ -133,42 +131,22 @@
           <h5 class="widget-title"><span>Latest Article</span></h5>
           <!-- post-item -->
           <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a 
-              {% comment %} href="{% url 'news' new1 %}" {% endcomment %}
-              >
-                <img loading="lazy" class="mr-3" src="{% static 'images/post/post-6.jpg'%}">
-              </a>
-              <div class="media-body">
-                <h6 class="h6 mb-0"><a href="post-elements.html">2019 ESF England Case Study Booklet
-                </a></h6>
-                <small>March 15, 2019</small>
-              </div>
-            </li>
-          </ul>
-          <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a href="post-elements.html">
-                <img loading="lazy" class="mr-3" src="{% static 'images/post/post-6.jpg'%}">
-              </a>
-              <div class="media-body">
-                <h6 class="h6 mb-0"><a href="post-elements.html">2019 ESF England Case Study Booklet
-                </a></h6>
-                <small>March 15, 2019</small>
-              </div>
-            </li>
-          </ul> <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a href="post-elements.html">
-                <img loading="lazy" class="mr-3" src="{% static 'images/post/post-6.jpg'%}">
-              </a>
-              <div class="media-body">
-                <h6 class="h6 mb-0"><a href="post-elements.html">2019 ESF England Case Study Booklet
-                </a></h6>
-                <small>March 15, 2019</small>
-              </div>
-            </li>
-          </ul>
+            {% for n in latestNews %}
+            
+              <li class="media widget-post align-items-center">
+                <a 
+                {% comment %} href="{% url 'news' new1 %}" {% endcomment %}
+                >
+                <img loading="lazy" class="mr-3" src="{{ n.image.url }}">
+                </a>
+                <div class="media-body">
+                  <h6 class="h6 mb-0"><a href="#">{{n.headline}}
+                  </a></h6>
+                  <small>{{ n.date|date:"M d, Y" }}</small>
+                </div>
+              </li>
+          {% endfor%}
+          <ul>
         </div>
         </div>
       </aside>

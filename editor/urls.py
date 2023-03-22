@@ -5,7 +5,8 @@ from .views import (
     home,
     SchemeUpdate,
     SchemeUpdateListView,
-    CustomLoginView)
+    CustomLoginView,
+    GeeksDeleteView)
 urlpatterns = [
     path('editor/',home,name="editor"),
     path('editor/login/', CustomLoginView.as_view(), name='login'),
@@ -13,4 +14,5 @@ urlpatterns = [
     path('editor/updatescheme/',SchemeUpdateListView.as_view(),name="updatescheme"),
     path('editor/addscheme/',SchemeAdd.as_view(),name = 'addscheme'),
     path('editor/updatescheme/<slug:slug>',SchemeUpdate.as_view(),name="updatescheme"),
+    path('editor/updatescheme/<slug:slug>/delete/', GeeksDeleteView.as_view(),name = 'deletescheme'),
     ]

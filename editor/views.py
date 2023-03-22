@@ -49,19 +49,20 @@ class SchemeUpdateListView(LoginRequiredMixin,ListView):
     def get_queryset(self):
         # user = get_object_or_404(User, username=self.kwargs.get('username'))
         search_input = self.request.GET.get('search-area') or ''
-        return Schemes.objects.filter(Q(details__icontains=search_input)|Q(eligibility__icontains=search_input)|Q(nodalMinistry__icontains=search_input)).order_by('-uploadDate')
+        return Schemes.objects.filter(Q(details__icontains=search_input)|Q(eligibility__icontains=search_input)).order_by('-uploadDate')
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
 class SchemeUpdate(LoginRequiredMixin,UpdateView):
     model = Schemes
-    template_name = 'editor/schemes_form.html'
-    fields = ['title','name','brief','eligibility','references','tags','details','category','openDate','closeDate','image']
+    template_name = 'editor/schemes_update_form.html'
+    fields = ['title','name','state','brief','eligibility','references','tags','details','category','openDate','closeDate','image']
     success_url = reverse_lazy('updatescheme')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Edit "+self.object.title
+        context['slug'] = self.object.slug
         return context
     def get_form(self,form_class=None):
         form = super(SchemeUpdate,self).get_form(form_class)
@@ -78,7 +79,8 @@ class SchemeUpdate(LoginRequiredMixin,UpdateView):
 class SchemeAdd(LoginRequiredMixin,CreateView):
     model = Schemes
     template_name = 'editor/schemes_form.html'
-    fields = ['title','name','brief','eligibility','references','tags','details','category','openDate','closeDate','image']
+    # fields = ('all',)
+    fields = ['title','name','state','brief','ministry','eligibility','references','tags','details','category','openDate','closeDate','image']
     # category = Tags.objects.all()
     # success_url = reverse_lazy('tasks')
     success_url = reverse_lazy('editor')
@@ -103,3 +105,14 @@ class SchemeAdd(LoginRequiredMixin,CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(SchemeAdd,self).form_valid(form)
+
+class GeeksDeleteView(DeleteView):
+    # specify the model you want to use
+    model = Schemes
+     
+    # can specify success url
+    # url to redirect after successfully
+    # deleting object
+    success_url = reverse_lazy('updatescheme')
+     
+    template_name = "editor/confirm_delete.html"

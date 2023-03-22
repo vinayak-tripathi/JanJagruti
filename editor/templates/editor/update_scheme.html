@@ -1,5 +1,5 @@
 {% extends "editor/base.html" %} {% block content %}
-<section class="section">
+<section class="mt-4">
   <div class="container">
     <div class="row">
       <aside class="col-lg-4 order-2 order-lg-1">
@@ -25,9 +25,8 @@
             {% for cat in category%}
 
             <li>
-              <a href="#" class="d-flex"
-                >{{cat}} <small class="ml-auto"></small></a
-              >
+              <a href="{% url 'category' cat.slug %}" class="d-flex"
+                >{{cat}}</a>
             </li>
             {% endfor %}
             
@@ -47,53 +46,22 @@
           <h5 class="widget-title"><span>Latest Article</span></h5>
           <!-- post-item -->
           <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a href="post-elements.html">
-                <img loading="lazy" class="mr-3" src="images/post/post-6.jpg" />
-              </a>
-              <div class="media-body">
-                <h5 class="h6 mb-0">
-                  <a href="post-elements.html"
-                    >Elements That You Can Use To Create A New Post On This
-                    Template.</a
+            {% for n in latestNews %}
+                <li class="media widget-post align-items-center">
+                  <a 
+                  {% comment %} href="{% url 'news' new1 %}" {% endcomment %}
                   >
-                </h5>
-                <small>March 15, 2020</small>
-              </div>
-            </li>
-          </ul>
-          <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a href="post-details-1.html">
-                <img loading="lazy" class="mr-3" src="images/post/post-1.jpg" />
-              </a>
-              <div class="media-body">
-                <h5 class="h6 mb-0">
-                  <a href="post-details-1.html"
-                    >Cheerful Loving Couple Bakers Drinking Coffee</a
-                  >
-                </h5>
-                <small>March 14, 2020</small>
-              </div>
-            </li>
-          </ul>
-          <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a href="post-details-2.html">
-                <img loading="lazy" class="mr-3" src="images/post/post-2.jpg" />
-              </a>
-              <div class="media-body">
-                <h5 class="h6 mb-0">
-                  <a href="post-details-2.html"
-                    >Cheerful Loving Couple Bakers Drinking Coffee</a
-                  >
-                </h5>
-                <small>March 14, 2020</small>
-              </div>
-            </li>
+                  <img loading="lazy" class="mr-3" src="{{ n.image.url }}">
+                  </a>
+                  <div class="media-body">
+                    <h6 class="h6 mb-0"><a href="#">{{n.headline}}
+                    </a></h6>
+                    <small>{{ n.date|date:"M d, Y" }}</small>
+                  </div>
+                </li>
+            {% endfor%}
           </ul>
         </div>
-
       </aside>
       <div class="col-lg-8 order-1 order-lg-2 mb-5 mb-lg-0 ">
       <div>
@@ -101,48 +69,54 @@
         <h6> We have found <strong style="color:#ce8460;font-size:17px">{{page_obj.paginator.count}}</strong> schemes </h6>
         <hr>
         {% for scheme in schemes %}
-        <article class="row  border-bottom ">
-  
-   
-          <div class="col-md-12 mb-3 mt-3">
-            <h4>
-              <a class="post-title" href="{% url "updatescheme" scheme.slug%}"
-                >{{scheme.name}}</a
-              >
-            </h4>
-            <ul class="list-inline post-meta mb-2">
-              <!-- <li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
-                    </li> -->
-              
-              {% if scheme.nodalMinistry%}      <li class="list-inline-item"><strong style="font-size: initial">{{scheme.nodalMinistry}}</strong></li> {%endif%}
-              {% comment %}
-              <li class="list-inline-item">
-                Categories : <a href="#!" class="ml-1">Photography </a>
-              </li>
-              {% endcomment %}<br>
-              <li class="list-inline-item">
-                Tags : {% for tag in scheme.tags.all %}
-                <a href="{% url 'tagged' tag.slug %}" class="badge bg-primary bg-lighten-md text-light" style="font-size:inherit">{{ tag }}</a>
-
-                {% endfor %} {% comment %}
-                <a href="#!" class="ml-1">Photo </a> ,<a href="#!" class="ml-1"
-                  >Image
-                </a>
+          <article class="row mb-3 shadow-sm border rounded-lg">
+            <div class="col-md-12 mb-3 mt-3">
+              <h4>
+                <a class="post-title text-primary" href="{% url "schemedetail" scheme.slug%}"
+                  >{{scheme.name}}</a
+                >
+              </h4>
+              <ul class="list-inline post-meta mb-2">
+                <!-- <li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
+                      </li> -->
+                
+                {% if scheme.ministry%}      <li class="list-inline-item"><strong style="font-size: initial">{{scheme.ministry}}</strong></li> {%endif%}
+                {% comment %}
+                <li class="list-inline-item">
+                  Categories : <a href="#!" class="ml-1">Photography </a>
+                </li>
                 {% endcomment %}
-              </li>
-            </ul>
-            <p>{{scheme.brief}}</p>
-            <a href="{% url "updatescheme" scheme.slug%}" class="btn btn-outline-primary"
-              >Update
-              <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-blue-900 cursor-pointer mr-2 opacity-50 cursor-not-allowed" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"></path>
-              </svg>
-              </a
-            >
-          </div>
-        </article>
-        
+              </ul>
+              <p class="h6">{{scheme.brief}}</p>
+              {% comment %} <ul class="list-inline post-meta mb-2">
+                <li class="list-inline-item"> {% endcomment %}
+                  
+                {% comment %} </li>
+              </ul> {% endcomment %}
+              <div class="d-flex justify-content-between">
+                <div class=' flex items-center  gap-4  justify-between items-center !justify-start !gap-1 flex-wrap align-self-center'>
+                  <h6>{% for tag in scheme.tags.all %}
+                    <span class="badge bg-secondary bg-lighten-md text-light hover:shadow-md mr-2 mt-1 cursor-pointer " style="font-size:inherit">{{ tag }}</span>
+                    {% endfor %}
+                  </h6>
+                </div>
+                  <div class="flex-col self-end align-self-center">
+                    <a href="{% url "updatescheme" scheme.slug%}" class="btn pt-1 pb-1 btn-outline-success ml-auto mr-3">
+                      Update
+                      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-blue-900 cursor-pointer mr-2 opacity-50 cursor-not-allowed" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="none" d="M0 0h24v24H0V0z"></path>
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"></path>
+                      </svg>
+                    </a><br>
+                    <a href="{% url "deletescheme" scheme.slug%}" class="btn pt-1 pb-1 btn-outline-danger ml-auto mt-2 mr-3">
+                      Delete
+                      <i class="ti-trash"></i>
+                    </a>
+                  </div>
+              
+              </div>
+            </div>
+          </article>
         {% endfor %}
         {% if schemes|length < 1 %}
           <div id="mainC " class='flexing col-lg-8 order-1 order-lg-2 mb-5 mb-lg-0'>

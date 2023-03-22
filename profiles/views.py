@@ -12,7 +12,7 @@ def homepage(request):
 		form = ProfileForm(request.POST, request.FILES)
 		if form.is_valid():
 			form.save()
-			messages.success(request, ('Your movie was successfully added!'))
+			messages.success(request, ('Your profile was successfully added!'))
 		else:
 			messages.error(request, 'Error saving form')
 		

@@ -51,8 +51,7 @@ class usersList(LoginRequiredMixin,View):
             print(users_ids)
             # list = get_user_model().objects.get(id=users_ids)
             # print(list)
-            # sendgrid_client = SendGridAPIClient('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') 
-           
+            
             # response = sendgrid_client.send(message)
             # print(response.status_code)
             # print(response.body)

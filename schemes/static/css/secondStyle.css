@@ -274,3 +274,32 @@ textarea:focus {
   position: relative;
   padding-bottom: 100%;
 }
+.share-options {
+  display: none;
+  position: absolute;
+  top: 14px;
+  left: -10px;
+  z-index: 999;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  padding: 10px;
+}
+
+.share-options a {
+  display: block;
+  margin-bottom: 10px;
+  color: #333333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.share-options a i {
+  margin-right: 5px;
+}
+
+.share-options a:hover {
+  background-color: #f1f1f1;
+}
+

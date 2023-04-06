@@ -34,6 +34,7 @@ def home(request):
         'ministries': mini,
         'states': state,
     }
+    print(mini)
     return render(request, 'schemes/home.html', context)
 
 
@@ -114,14 +115,24 @@ class CategoryView(ListView):
         posts = Schemes.schemeManager.active().filter(category=self.cat)
         return posts
 
-def ministryList(request):
-    mini = Ministry.objects.annotate(nmini=Count('schemes')).order_by('-nmini')
-    # print(mini)
-    context = {
-        'ministries': mini
-    }
-    return render(request, 'schemes/ministry.html', context)
+class MinistryList(ListView):
+    model = Ministry
+    template_name = 'schemes/ministry.html'
+    context_object_name = 'ministries'
+    queryset = model.objects.annotate(nmini=Count('schemes')).order_by('-nmini')
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        search_input = self.request.GET.get('search-query') or ''
+        context['search_input'] = search_input
+        return context
+
+    def get_queryset(self):
+        search_input = self.request.GET.get('search-query') or ''
+        print(search_input)
+        return Ministry.minsitryManager.queryset().filter(Q(name__icontains=search_input))
+    
 class MinistryView(ListView):
     model = Schemes
     template_name = 'schemes/schemes_list.html'
@@ -173,7 +184,6 @@ class StateView(ListView):
 
         # print(self.kwargs['slug'],self.tag)
         posts = Schemes.schemeManager.active().filter(state__name=self.kwargs['name'])
-        print(posts)
         return posts
 
 class TaggedView(ListView):

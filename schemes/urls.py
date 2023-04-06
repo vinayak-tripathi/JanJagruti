@@ -10,7 +10,7 @@ from .views import (
     userForm,
     contact,
     MinistryView,
-    ministryList,
+    MinistryList,
     stateList,
     StateView
 )
@@ -22,7 +22,7 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('schemes/<slug:slug>/',SchemeDetailView.as_view(), name='schemedetail'),
     path('category/<slug:slug>',CategoryView.as_view(),name='category'),
-    path('ministry/',ministryList,name='ministryList'),
+    path('ministry/',MinistryList.as_view(),name='ministryList'),
     path('ministry/<slug:slug>/',MinistryView.as_view(),name='ministry'),
     path('state/', stateList,name='stateList'),
     path('state/<str:name>/',StateView.as_view(),name='state'),

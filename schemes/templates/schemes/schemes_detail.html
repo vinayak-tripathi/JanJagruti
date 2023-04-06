@@ -28,22 +28,78 @@
               <div class="alert alert-success p-1 ml-3 mt-2" id='alrt' role="alert" style = "display:none">
                 URL copied
               </div>
+             
             </div>
               <script>
-                  function copyText() {
+                  window.onload = function() {
+                    function applyStyleToAnchors(className) {
+                    const pdfDiv = document.querySelector('.'+ className);
+                    const anchorTags = pdfDiv.querySelectorAll('a');
+                    anchorTags.forEach(anchorTag => {
+  // Apply your style to each anchor tag here
+                    anchorTag.style.display = 'inline-block';
+                    anchorTag.style.height = '50px';
+                    anchorTag.style.paddingLeft = '50px';
+                    anchorTag.style.backgroundImage = "url('https://scls.typepad.com/.a/6a00d8341d32e053ef01a3fceed4b4970b-pi')";
+                    anchorTag.style.backgroundRepeat = 'no-repeat';
+                    anchorTag.style.backgroundSize= 'contain';
+                    anchorTag.style.backgroundPosition = 'left center';});
+                            
+    
+                    }
+                    applyStyleToAnchors('pdf_data');
+            
+                      };
+                                      
+              
+                    function copyText() {
                       /* Copy text into clipboard */
                       document.getElementById('alrt').style.display='inline'; 
                       setTimeout(function() {document.getElementById('alrt').style.display='none';console.log("vt")},3000);
                       navigator.clipboard.writeText
                           (window.location.href);
                   }
-                  
+                    function showShareOptions() {
+                      var shareOptions = document.querySelector('.share-options');
+                      shareOptions.style.display = 'block';
+                      document.addEventListener('click', hideShareOptions);
+
+                    }
+                    function hideShareOptions(e) {
+                      // console.log(e)
+                      var shareIcon = document.querySelector('.share-icon');
+                      var shareOptions = document.querySelector('.share-options');
+                      var shareList = document.querySelector('.shareList');
+
+                      // console.log(shareIcon,shareIcon.contains(e.target),shareOptions.contains(e.target),shareList.contains(e.target),e.target)
+                      if (shareList.contains(e.target)){
+                        console.log('ss')
+                      }
+                      else if (!shareOptions.contains(e.target) && !shareIcon.contains(e.target)) {
+                        shareOptions.style.display = 'none';
+                        document.removeEventListener('click', hideShareOptions);
+                      }
+                      }
+                    function shareLink() {
+                      var shareLink = document.querySelector('#share-link').value;
+                      // Use a library or API to share the link (e.g. ShareThis, AddThis, etc.)
+                    }
                   
               </script>
-              <div class="row">
-                <a href="post-elements.html" class="btn btn-outline-primary mr-1"><i class="ti-share"> </i></a>
+              <div class="row" style="position: relative;">
+                <div class="shareList">
+            
+                <a onClick="showShareOptions()" class="btn btn-outline-primary mr-1" alt="Share URL"><i class="ti-share"> </i>
+                </a>
+                <div class="share-options" >
+                  <a href="whatsapp://send?text=https://janjagruti.pythonanywhere.com/" data-action="share/whatsapp/share"><i class="share-icon ti-instagram"></i></a>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=https://janjagruti.pythonanywhere.com/" target="_blank"><i class="share-icon ti-facebook"></i></a> 
+                  <!-- <a href="whatsapp://send?text=https://janjagruti.pythonanywhere.com/" data-action="share/whatsapp/share"><i class="share-icon ti-whatsapp"></i></a> -->
+                </div>
+              </div>
                 <a class="btn btn-outline-primary" onclick = "copyText()" alt="Copy URL"><i class="ti-link"> </i></a>
               </div>
+             
             </div>
           </div>
         </article>
@@ -85,7 +141,7 @@
         <div id="applicationProcess">
           <h4>Application Process</h4>
           <article class="row mb-4 card p-4 rounded-lg shadow-sm">
-            <div class="col-md-12">
+            <div class="col-md-12 pdf_data">
               {{ object.applicationProcess|safe }}
             </div>
           </article>

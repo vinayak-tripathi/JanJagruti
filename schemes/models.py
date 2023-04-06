@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils.text import slugify 
 from taggit.managers import TaggableManager
 from ckeditor.fields import RichTextField
+from django.db.models import Q, Count
 # from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 from taggit.models import TagBase, GenericTaggedItemBase
@@ -25,10 +26,31 @@ class Category(TagBase):
         verbose_name_plural = "Categories"
 
     # ... methods (if any) here
+class SchemeManager(models.Manager):
+    def active(self):
+        return super().get_queryset().filter(isExpired=False)
+
+    def expired(self):
+        return super().get_queryset().filter(isExpired=True)
+
+class MinistryManager(models.Manager):
+    def queryset(self):
+        queryset = super().get_queryset()
+
+            # Annotate the queryset with the count of related SchemeItem objects
+        queryset = queryset.annotate(nmini=Count('schemes')).order_by('-nmini')
+
+            # Filter the queryset to only include objects where the count of related SchemeItem objects is greater than 0
+        queryset = queryset.filter()
+        return queryset
+
 
 class Ministry(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField()
+    image = models.URLField(max_length=200,default="https://static.thenounproject.com/png/4592332-200.png")
+    objects = models.Manager()
+    minsitryManager = MinistryManager()
 
     class Meta:
         #enforcing that there can not be two categories under a parent with same slug
@@ -72,12 +94,6 @@ class State(models.Model):
     def __str__(self) -> str:
         return self.name
 
-class SchemeManager(models.Manager):
-    def active(self):
-        return super().get_queryset().filter(isExpired=False)
-
-    def expired(self):
-        return super().get_queryset().filter(isExpired=True)
 
 class Schemes(models.Model):
     title = models.CharField(max_length=100)

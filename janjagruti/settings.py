@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'editor',
     'profiles',
     'news',
-    'recommendation'
+    'recommendation',
+    'admin_panel'
+    # 'django_extensions'
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -89,10 +91,10 @@ WSGI_APPLICATION = 'janjagruti.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'janjagruti$default',
-#         'USER': 'janjagruti',
-#         'PASSWORD':'Nothing@etrx2023',
-#         'HOST': 'janjagruti.mysql.pythonanywhere-services.com',
+#         'NAME': 'janjagruti',
+#         'USER': 'tutorialuser',
+#         'PASSWORD':'tutorialuser',
+#         'HOST': 'localhost',
 #         'PORT': '3306',
 #     }
 # }
@@ -102,6 +104,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'sqlite.db',
     }
 }
+# GRAPH_MODELS ={
+# 'all_applications': True,
+# 'graph_models': True,
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

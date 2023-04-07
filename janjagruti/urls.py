@@ -24,7 +24,8 @@ urlpatterns = [
     path("",include('editor.urls')),
     path("",include('profiles.urls')),
     path("",include('news.urls')),
-    path("",include('recommendation.urls'))
+    path("",include('recommendation.urls')),
+    path('dashboard/', include('admin_panel.urls')),
 ]
 
 if settings.DEBUG:

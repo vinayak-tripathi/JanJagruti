@@ -36,15 +36,22 @@ class SchemeManager(models.Manager):
 class MinistryManager(models.Manager):
     def queryset(self):
         queryset = super().get_queryset()
-
             # Annotate the queryset with the count of related SchemeItem objects
         queryset = queryset.annotate(nmini=Count('schemes')).order_by('-nmini')
-
             # Filter the queryset to only include objects where the count of related SchemeItem objects is greater than 0
         queryset = queryset.filter()
+        print(queryset)
         return queryset
 
-
+class StateManager(models.Manager):
+    def queryset(self):
+        queryset = super().get_queryset()
+            # Annotate the queryset with the count of related SchemeItem objects
+        queryset = queryset.annotate(nstate=Count('schemes')).order_by('-nstate')
+            # Filter the queryset to only include objects where the count of related SchemeItem objects is greater than 0
+        queryset = queryset.filter()
+        print(queryset)
+        return queryset
 class Ministry(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField()
@@ -91,6 +98,8 @@ class State(models.Model):
     image = models.URLField(max_length=200,default="https://static.thenounproject.com/png/4592332-200.png")
     StateOrUT = models.CharField(max_length=100,choices=ST_UT_CHOICES,verbose_name="State or Union Territory")
     capital = models.CharField(max_length=100,null= True, blank=True)
+    objects = models.Manager()
+    stateManager = StateManager()
     def __str__(self) -> str:
         return self.name
 

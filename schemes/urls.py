@@ -11,7 +11,7 @@ from .views import (
     contact,
     MinistryView,
     MinistryList,
-    stateList,
+    StateList,
     StateView
 )
 # from . import views
@@ -24,7 +24,7 @@ urlpatterns = [
     path('category/<slug:slug>',CategoryView.as_view(),name='category'),
     path('ministry/',MinistryList.as_view(),name='ministryList'),
     path('ministry/<slug:slug>/',MinistryView.as_view(),name='ministry'),
-    path('state/', stateList,name='stateList'),
+    path('state/', StateList.as_view(),name='stateList'),
     path('state/<str:name>/',StateView.as_view(),name='state'),
     path('tagged/<slug:slug>',TaggedView.as_view(),name='tagged'),
     path('user/',userForm,name="userForm"),

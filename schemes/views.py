@@ -154,7 +154,27 @@ class MinistryView(ListView):
         posts = Schemes.schemeManager.active().filter(ministry__slug=self.kwargs['slug'])
         print(posts)
         return posts
+class StateList(ListView):
+    model = State
+    template_name = 'schemes/state.html'
+    context_object_name = 'states'
+    queryset = model.objects.annotate(nstate=Count('schemes')).order_by('-nstate')
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        search_input = self.request.GET.get('search-query') or ''
+        context['search_input'] = search_input
+        return context
+
+    def get_queryset(self):
+        search_input = self.request.GET.get('search-query') or ''
+        print('LINEjjk')
+        print(search_input)
+        result = State.stateManager.queryset().filter(Q(name__icontains=search_input))
+        print(result)
+        return result
+ 
 def stateList(request):
     mini = State.objects.annotate(nstate=Count('schemes')).order_by('-nstate')
     # print(mini)

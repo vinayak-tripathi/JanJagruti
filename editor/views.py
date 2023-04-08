@@ -3,6 +3,7 @@ from schemes.models import Schemes,Tags, Category
 from django.db.models import Q
 from django.urls import reverse_lazy
 # Create your views here.
+from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (
     ListView,
@@ -14,6 +15,9 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django import forms
+from django.http import JsonResponse
+from .models import Schemes_Res
+import csv
 
 class CustomLoginView(LoginView):
     template_name = 'editor/login.html'
@@ -30,6 +34,41 @@ def home(request):
     #     'posts': Schemes.objects.all()
     # }
     return render(request, 'editor/home.html')
+@login_required
+def dashboard_with_pivot(request):
+    return render(request, 'editor/admin_panel.html', {})
+@login_required
+def dashboard_data(request):
+    print('KIJ')
+    dataset = Schemes_Res.objects.all()
+    print(dataset)
+    data = serializers.serialize('json', dataset)
+    print(dataset)
+    return JsonResponse(data, safe=False)
+# Insert data to database
+# def insert_data(request):
+#     dataReader = csv.reader(open('/Users/sandeepsuthar/Desktop/project/JanJagruti_Temp/editor/data.csv'), delimiter=',', quotechar='"')
+#     print(dataReader)
+#     count = 0
+#     for row in dataReader:
+#         print(row)
+#         if count != 0:
+#             print(type(row[2]))
+#             print(int(row[2]))
+#             scheme=Schemes_Res()
+#             scheme.gender=row[1]
+#             scheme.age=int(float(row[2]))
+#             scheme.martial_status=row[3]
+#             scheme.state=row[4]
+#             scheme.area_of_residence=row[5]
+#             scheme.caste=row[6]
+#             scheme.disable='True' if row[8] == 'Yes' else 'False'
+#             scheme.bpl='True' if row[9] == 'Yes' else 'False'
+#             scheme.income=int(float(row[10]))
+#             scheme.student='True' if row[11] == 'Yes' else 'False'
+#             scheme.employement= row[12]
+#             scheme.save()
+#         count +=1
 
 class SchemeUpdateListView(LoginRequiredMixin,ListView):
     model = Schemes

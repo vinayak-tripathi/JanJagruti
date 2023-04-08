@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'profiles',
     'news',
     'recommendation',
-    'admin_panel'
     # 'django_extensions'
 ]
 

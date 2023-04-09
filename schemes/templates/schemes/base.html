@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
   <!--Favicon-->
-  <link rel="shortcut icon" href="{% static 'images/logo1.jpg' %}" type="image/x-icon" />
-  <link rel="icon" href="{% static 'images/logo1.jpg'%}" type="image/x-icon" />
+  <link rel="shortcut icon" href="{% static 'images/JanJagrutiInitial.png'%}" type="image/x-icon" />
+  <link rel="icon" href="{% static 'images/JanJagrutiInitial.png'%}" type="image/x-icon" />
 
   {% if title %}
   <title>{{ title }}</title>
@@ -42,9 +42,10 @@
 <body>
   <header class="sticky-top bg-white border-bottom border-default shadow-sm">
     <div class="container">
+      
       <nav class="navbar navbar-expand-lg navbar-white">
         <a class="navbar-brand" href="{% url 'home'%}">
-          <img class="img-fluid" width="50px" src="{% static 'images/logo1.jpg'%}" alt="Logo" />
+          <img class="img-fluid" src="{% static 'images/JanJagrutiLogo.png'%}" alt="Logo" style="width: 68px;">
         </a>
         <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
           <i class="ti-menu"></i>
@@ -52,18 +53,10 @@
 
         <div class="collapse navbar-collapse text-center" id="navigation">
           <ul class="navbar-nav mr-auto">
+            
             <li class="nav-item">
               <a class="nav-link" href="{% url 'home'%}"> Home </a>
-              {% comment %}
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="index-full.html">Homepage Full Width</a>
-                <a class="dropdown-item" href="index-full-left.html">Homepage Full With Left Sidebar</a>
-                <a class="dropdown-item" href="index-full-right.html">Homepage Full With Right Sidebar</a>
-                <a class="dropdown-item" href="index-list.html">Homepage List Style</a>
-                <a class="dropdown-item" href="index-list-left.html">Homepage List With Left Sidebar</a>
-                <a class="dropdown-item" href="index-list-right.html">Homepage List With Right Sidebar</a>
-              </div>
-              {% endcomment %}
+              
             </li>
             
             <li class="nav-item">
@@ -78,24 +71,20 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'news' %}">News</a>
             </li>
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
-            {% comment %}
+            </li> {% endcomment %}
+            
             <li class="nav-item dropdown">
               <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">Pages <i class="ti-angle-down ml-1"></i>
+                aria-expanded="false">About <i class="ti-angle-down ml-1"></i>
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="author.html">Author</a>
-                <a class="dropdown-item" href="post-details-1.html">Post Details 1</a>
-                <a class="dropdown-item" href="post-details-2.html">Post Details 2</a>
-                <a class="dropdown-item" href="post-elements.html">Post Elements</a>
-                <a class="dropdown-item" href="privacy-policy.html">Privacy Policy</a>
-                <a class="dropdown-item" href="terms-conditions.html">Terms Conditions</a>
+                <a class="dropdown-item" href="{% url 'about' %}">About Us</a>
+                <a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a>
               </div>
             </li>
-            {% endcomment %}
+    
           </ul>
 
           {% comment %} <select class="m-2 border-0" id="select-language">
@@ -154,8 +143,8 @@
       <div class="row justify-content-between">
         <div class="col-md-3 mb-4">
           <a class="mb-4 d-block" href="{% url 'home'%}">
-            <img class="img-fluid" width="150px" src="{% static 'images/logo1.jpg'%}" alt="Janjagurati"
-              style="width: 100px; height: 100px" />
+            <img class="img-fluid" src="{% static 'images/JanJagrutiNav1.png'%}" alt="Janjagurati"
+              style="width: 250px; height: 75px" />
           </a>
           <p>
             Sardar Patel Institute

@@ -8,12 +8,14 @@
     </h3>
     <div class="widget">
       <h5 class="widget-title"><span>Search</span></h5>
-      <form action="/logbook-hugo/search" class="widget-search">
+      <form class="widget-search">
         <input
           id="search-query"
-          name="s"
+          name="search-query"
           type="search"
           placeholder="Type &amp; Hit Enter..."
+          value="{{search_input}}"
+
         />
         <button type="submit"><i class="ti-search"></i></button>
       </form>
@@ -24,8 +26,10 @@
         <article class="border border-default article_main">
           <a href="{%url 'ministry' ministry.slug%}">
           <div class="article_img">
-            <div class="inner_element">
-
+            <div class="article_img">
+              <div class="inner_element">
+                <img src = "{{ministry.image}}" class="img-fluid img-thumbnail shadow-sm">
+              </div>
             </div>
           </div>
           <div class="text">

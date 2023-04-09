@@ -81,6 +81,18 @@ h6,
   font-family: "Open Sans", sans-serif;
   text-transform: capitalize;
   padding: 8px 25px;
+  border-radius: 10px;
+  border: 1px solid;
+  position: relative;
+  z-index: 1;
+  transition: 0.2s ease;
+}
+
+.btn-rounded {
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  text-transform: capitalize;
+  padding: 8px 25px;
   border-radius: 50px;
   border: 1px solid;
   position: relative;
@@ -179,7 +191,7 @@ button,
 select {
   cursor: pointer;
   transition: 0.2s ease;
-  color: #000;
+  color: #1100ff;
 }
 a:focus,
 button:focus,
@@ -324,6 +336,10 @@ a:hover {
 }
 .form-control::placeholder {
   font-size: 80%;
+}
+.active{
+  text-decoration:underline;
+  font-weight:bold;
 }
 
 .nav-item {

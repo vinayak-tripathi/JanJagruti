@@ -3,30 +3,23 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from django.contrib.auth.models import User
    
-def send_emails(users_ids):
+def send_emails(users_ids,messageContent=None,isCustomMessage = False):
     to_emails = []
     for id in users_ids:
         user = User.objects.get(pk=id)
         # print(user.keys())
         to_emails.append((user.email,user.username))
-    print(to_emails)
-    # plain_text_content = codecs.open("plain-text.txt", 'r')
-    # plain_text_content_result = plain_text_content.read()
-    
-    # html_content = codecs.open("design-template.html",'r')
-    # html_content_result = html_content.read()
-    # sendmail/templates/plain-text.txt
-
-    message = Mail(
-        from_email=('sandeep.suthar@spit.ac.in', 'sandeep'),
-        subject='Schemes recomendation',
-        # html_content=html_content_result,
-        # plain_text_content=plain_text_content_result,
-        to_emails=to_emails,
-        is_multiple=True,
-        ) 
-    message.dynamic_template_data = { 
-        "schemes" :[ {
+    if isCustomMessage:
+        subject = 'Message from JanJagruti'
+        messageContent = [ {
+                    "scheme_tag": "Message",
+                    "scheme_name": "JanJagruti",
+                    "scheme_description": messageContent,
+                    "scheme_url" : "https://picsum.photos/200/300"
+                    }]
+    else:
+        subject = 'Schemes recommendation'
+        messageContent = [ {
                     "scheme_tag": "Education",
                     "scheme_name": "First Scheme",
                     "scheme_description": "OK",
@@ -36,7 +29,17 @@ def send_emails(users_ids):
                     "scheme_name": "First Scheme",
                     "scheme_description": "Nothing",
                     "scheme_url" : "https://picsum.photos/200/300"
-                    }]}
+                    }]
+    message = Mail(
+        from_email=('sandeep.suthar@spit.ac.in', 'sandeep'),
+        subject=subject,
+        # html_content=html_content_result,
+        # plain_text_content=plain_text_content_result,
+        to_emails=to_emails,
+        is_multiple=True,
+        ) 
+    message.dynamic_template_data = { 
+        "schemes" :messageContent}
             
     message.template_id = 'd-555cead9c7e949df82ea7559b2efe853'
     sendgrid_client = SendGridAPIClient('') 
@@ -46,8 +49,4 @@ def send_emails(users_ids):
         response = sendgrid_client.send(message)
     except Exception as e:
         print(e.to_dict)
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
-    print(to_emails)
     print("EmailSet")

@@ -1,14 +1,14 @@
 {% extends "editor/base.html" %}
 {% block content %}
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-8">
+        <div class="row d-flex">
+            <div class="col-md-4">
                 <div class="row">
                    
-                    <div class="col-md-3 mb-2 p-0">
+                    <div class="col-md-6 mb-2 p-0">
                         <button type="button" class="btn btn-primary send-mail btn-sm" disabled="disabled"> <i class="fa fa-share"></i> Send Mail</button>
                     </div>
-                    <div class="col-md-12 success-mail p-0" style="display: none;">
-                        <div class="alert alert-success">
+                    <div class="col-md-6 success-mail p-0" style="display: none;">
+                        <div class="alert p-2 alert-success m-0">
                           Sent Mail Successfully.
                         </div>
                     </div>
@@ -28,11 +28,20 @@
                             <tr>
                                 <td><input type="checkbox" name="ckeck_user[]" class="ckeck_user" value="{{ user.id }}"></td>
                                 {% comment %} <td>{{ user.username}}</td> {% endcomment %}
-                                <td>{{ user.email }}</td>
+                                <td><a class="open-modal" data-url="{% url 'up' id=user.id %}">{{ user.email }}<i class='ti-link'></i></a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+                </div>
+                <div id="modal-div"></div>
+            </div>
+            <div class="col-md-8">
+                <div>
+                    <div class="form-check">
+                        <input class='form-check-input' type = "checkbox" name = "isCustomMessage" id="isCustomMessage"><label class="form-check-label" for = 'isCustomMessage'>CustomMessage</label><br>
+                    </div>
+                    <textarea class= 'form-control input-disabled' name='messageContent' id='messageContent' disabled="disabled" placeholder = 'Enter the custom message to be send'></textarea>
                 </div>
             </div>
         </div>
@@ -60,7 +69,12 @@
         e.preventDefault();
         var ids = [];
         var token = $('input[name="csrfmiddlewaretoken"]').val();
+        var message = $('textarea[name="messageContent"]').val();
+        if (message.lenght==0){
+            return;
+        }
 
+        console.log(message);
         $('.ckeck_user:checked').each(function(i){
             ids[i] = $(this).val();
         })
@@ -69,20 +83,51 @@
             $(this).attr("disabled", true);
             $(this).html('<i class="fa fa-spinner fa-spin"></i> Send Mail');
             $.ajax({
-                url: '{% url "users" %}',
+                url: '{% url "email" %}',
                 type: 'POST',
                 data: {
                     ids:ids,
+                    isCustomMessage:$("#isCustomMessage").is(":checked"),
+                    message:message,
                     csrfmiddlewaretoken: token,
                 },
                 success: function (data) {
                     $('.success-mail').css('display','block');
                     $('.ckeck_user, .user-all').prop('checked',false);
                     $('.send-mail').attr("disabled", false);
+                    setTimeout(function () {
+                        $('.success-mail').css('display','none');
+                    }, 2500)
                     $('.send-mail').html('<i class="fa fa-share"></i> Send Mail');
                 }
             });
         }
     });
+    var modalDiv = $("#modal-div");
+
+    $(".open-modal").on("click", function() {
+    $.ajax({
+        url: $(this).attr("data-url"),
+        success: function(data) {
+        modalDiv.html(data);
+        $("#myEdit").modal();
+        }
+    });
+    });
+    $("#isCustomMessage").change(function () {
+        if ($("#isCustomMessage:checked").length ) {
+          $('#messageContent').removeAttr('disabled');
+          $('#messageContent').removeClass('input-disabled');
+        }else{
+         $('#messageContent').attr('disabled','disabled');
+         $('#messageContent').addClass('input-disabled');
+       }
+    });
 </script>
+<style>
+    .input-disabled{
+        background-color:#36353545 !important;
+        text-decoration: line-through;
+    }
+</style>
 {% endblock content%}

@@ -27,5 +27,8 @@ urlpatterns = [
     path("",include('recommendation.urls'))
 ]
 
+admin.site.site_header = "JanJagruti Admin"
+admin.site.site_title = "JanJagruti Admin Portal"
+admin.site.index_title = "Welcome to JanJagruti Admin Portal"
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

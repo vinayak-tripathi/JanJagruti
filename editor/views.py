@@ -211,7 +211,7 @@ class MinistryAdd(LoginRequiredMixin,View):
             form = MinistryForm(request.POST)
             if form.is_valid() and 'add' in request.POST:
                 form.save()
-            return redirect('addstate')
+            return redirect('addministry')
             # return render(request, 'editor/state_list.html', {'form': form})
 
 def updateMinistry(request, pk=None):
@@ -222,7 +222,7 @@ def updateMinistry(request, pk=None):
     # redirect to detail_view
     if form.is_valid():
         form.save()
-        return redirect('addstate')
+        return redirect('addministry')
  
     # add form dictionary to context
     context["form"] = form
@@ -238,7 +238,7 @@ class MinistryDeleteView(LoginRequiredMixin,DeleteView):
     # can specify success url
     # url to redirect after successfully
     # deleting object
-    success_url = reverse_lazy('addstate')
+    success_url = reverse_lazy('addministry')
      
     template_name = "editor/confirm_delete.html"
 

@@ -1,0 +1,78 @@
+{% extends "editor/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="mt-4">
+    <div class="container">
+        <div class='row'>
+            <aside class="col-lg-5 order-1 order-lg-1" id='formState'>
+                <form method="POST">
+                    <div class="widget">
+                        <h5 class="widget-title"><span>Add Ministry</span></h5>
+                        
+                        <fieldset>
+                            {% csrf_token %}
+                            {{ form|crispy  }}
+                            <button type="submit" name='add' class="btn btn-primary">Submit</button>
+                        </fieldset>
+                    </div>
+                </form>
+            </aside>
+
+            <div class="col-lg-7 order-2 order-lg-2 mb-5 mb-lg-0 ">
+                <div class="widget">
+                    <h5 class="widget-title"><span>Edit Ministry</span></h5>
+                    
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                {% comment %} <th>Name</th> {% endcomment %}
+                                <th></th>
+                                <th>Name</th>
+                                <th class='center'>Edit</th>
+                                <th class='center'>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for state in ministryList%}
+                            <tr>
+                                <td class='p-1 center'><img src = "{{state.image}}" class="img-fluid img-thumbnail shadow-sm" style="height:39px;"></td>
+                                <td>{{state}}</td>
+                                <td class='center'><a class="open-modal" data-url="{% url 'updateministry' state.id %}" class="text-success"><i class='ti-pencil'></a></td>
+                                {% comment %} <td>{{ user.username}}</td> {% endcomment %}
+                                <td class='center'><a href="{% url 'deleteministry' state.id %}" class="text-danger"><i class='ti-trash'></i></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="modal-div"></div>
+<style>
+    @media (min-width: 990px){
+    #formState{position: sticky;
+        align-self: flex-start;
+        top: 100px;
+        height: fit-content;
+        overflow: auto;}
+    }  
+    .table .center {
+        text-align: center;
+        } 
+</style>
+<script>
+    var modalDiv = $("#modal-div");
+
+    $(".open-modal").on("click", function() {
+    $.ajax({
+        url: $(this).attr("data-url"),
+        success: function(data) {
+        modalDiv.html(data);
+        $("#myEdit").modal();
+        }
+    });
+    });
+</script>
+{% endblock content %}

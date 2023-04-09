@@ -29,8 +29,8 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
   <!--Favicon-->
-  <link rel="shortcut icon" href="{% static 'images/logo1.jpg' %}" type="image/x-icon" />
-  <link rel="icon" href="{% static 'images/logo1.jpg'%}" type="image/x-icon" />
+  <link rel="shortcut icon" href="{% static 'images/JanJagrutiInitial.png'%}" type="image/x-icon" />
+  <link rel="icon" href="{% static 'images/JanJagrutiInitial.png'%}" type="image/x-icon" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   {% if title %}
@@ -45,7 +45,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-white">
         <a class="navbar-brand" href="{% url 'home'%}">
-          <img class="img-fluid" width="50px" src="{% static 'images/logo1.jpg'%}" alt="Logo" />
+          <img class="img-fluid" src="{% static 'images/JanJagrutiLogo.png'%}" alt="Logo" style="width: 68px;">
         </a>
         <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
           <i class="ti-menu"></i>
@@ -63,13 +63,13 @@
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="{% url 'updatescheme' %}">Update Schemes</a>
                 <a class="dropdown-item" href="{% url 'addscheme' %}">Add Scheme</a>
-                <a class="dropdown-item" href="post-details-2.html">Add Category</a>
-                <a class="dropdown-item" href="post-elements.html">Add State</a>
-                <a class="dropdown-item" href="privacy-policy.html">Add Ministry</a>
+                <a class="dropdown-item" href="{% url 'addstate' %}">Add State</a>
+                <a class="dropdown-item" href="{% url 'addministry' %}">Add Ministry</a>
+                <a class="dropdown-item" href="post-elements.html">Add Category</a>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">Edit Tender</a>
+              <a class="nav-link" href="{% url 'email' %}">Emails</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">Editor Jobs</a>
@@ -120,8 +120,8 @@
       <div class="row justify-content-between">
         <div class="col-md-3 mb-4">
           <a class="mb-4 d-block" href="{% url 'home'%}">
-            <img class="img-fluid" width="150px" src="{% static 'images/logo1.jpg'%}" alt="Janjagurati"
-              style="width: 100px; height: 100px" />
+            <img class="img-fluid" src="{% static 'images/JanJagrutiNav1.png'%}" alt="Janjagurati"
+              style="width: 250px; height: 75px" />
           </a>
           <p>
             Sardar Patel Institute

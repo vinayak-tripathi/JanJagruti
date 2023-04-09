@@ -6,7 +6,14 @@ from .views import (
     SchemeUpdate,
     SchemeUpdateListView,
     CustomLoginView,
-    GeeksDeleteView)
+    GeeksDeleteView,
+    StateAdd,
+    updateState,
+    StateDeleteView,
+    MinistryAdd,
+    updateMinistry,
+    MinistryDeleteView,
+    )
 urlpatterns = [
     path('editor/',home,name="editor"),
     path('editor/login/', CustomLoginView.as_view(), name='login'),
@@ -15,4 +22,10 @@ urlpatterns = [
     path('editor/addscheme/',SchemeAdd.as_view(),name = 'addscheme'),
     path('editor/updatescheme/<slug:slug>',SchemeUpdate.as_view(),name="updatescheme"),
     path('editor/updatescheme/<slug:slug>/delete/', GeeksDeleteView.as_view(),name = 'deletescheme'),
+    path('editor/updatestate/', StateAdd.as_view(),name = 'addstate'),
+    path('editor/updatestate/<int:pk>/', updateState, name = 'updatestate'),
+    path('editor/updatestate/<int:pk>/delete/', StateDeleteView.as_view(),name = 'deletestate'),
+    path('editor/updateministry/', MinistryAdd.as_view(),name = 'addministry'),
+    path('editor/updateministry/<int:pk>/', updateMinistry, name = 'updateministry'),
+    path('editor/updateministry/<int:pk>/delete/', MinistryDeleteView.as_view(),name = 'deleteministry'),
     ]

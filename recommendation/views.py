@@ -33,7 +33,7 @@ class usersList(LoginRequiredMixin,View):
     def post(self,request,*args,**kwargs):
         # HTMLFile = open("/Users/sandeepsuthar/Desktop/project/exampleapp/sendmail/design-template.html", "r")
         # print(form.cleaned_data['my_form_field_name'])
-        print(request.POST)
+        # print(request.POST)
         # codecs.open("")
         # Reading the file
 
@@ -43,9 +43,9 @@ class usersList(LoginRequiredMixin,View):
         # ]
         if request.method == 'POST':
             
-            print('v',request.POST.get('message'), request.POST.get('isCustomMessage')=='true')
+            # print('v',request.POST.get('message'), request.POST.get('isCustomMessage')=='true')
             users_ids = request.POST.getlist('ids[]')
-            print(users_ids)
+            # print(users_ids)
             # list = get_user_model().objects.get(id=users_ids)
             # print(list)
             # response = sendgrid_client.send(message)

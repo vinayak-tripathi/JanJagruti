@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-md-6 success-mail p-0" style="display: none;">
                         <div class="alert p-2 alert-success m-0">
-                          Sent Mail Successfully.
+                          Mail Sent Successfully.
                         </div>
                     </div>
                 </div>
@@ -46,6 +46,7 @@
             </div>
         </div>
     <script>
+        
     $('.user-all').change(function (e) {
         var value = $('.user-all:checked').val();
         if (value == 1) {
@@ -81,7 +82,7 @@
 
         if (ids != '') {
             $(this).attr("disabled", true);
-            $(this).html('<i class="fa fa-spinner fa-spin"></i> Send Mail');
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending..');
             $.ajax({
                 url: '{% url "email" %}',
                 type: 'POST',
@@ -94,11 +95,10 @@
                 success: function (data) {
                     $('.success-mail').css('display','block');
                     $('.ckeck_user, .user-all').prop('checked',false);
-                    $('.send-mail').attr("disabled", false);
                     setTimeout(function () {
                         $('.success-mail').css('display','none');
                     }, 2500)
-                    $('.send-mail').html('<i class="fa fa-share"></i> Send Mail');
+                    $('.send-mail').html('Send Mail');
                 }
             });
         }

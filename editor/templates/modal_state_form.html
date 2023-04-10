@@ -1,3 +1,5 @@
+{% load crispy_forms_tags %}
+
 <div class="modal fade" id="myEdit" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -13,7 +15,7 @@
                         {% csrf_token %}
                     
                         <!-- Using the formset -->
-                        {{ form.as_div }}
+                        {{ form|crispy }}
                         
                     
                 </div>

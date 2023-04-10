@@ -1,11 +1,13 @@
+{% load crispy_forms_tags %}
+
 <div class="modal fade" id="myEdit" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{{stateName}}</h4>
+                <h4 class="modal-title">{{ministryName}}</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <form method="POST" enctype="multipart/form-data" action = "{% url 'updatestate' id %}">
+            <form method="POST" enctype="multipart/form-data" action = "{% url 'updateministry' id %}">
                 <div class="modal-body">
                     
     
@@ -13,7 +15,7 @@
                         {% csrf_token %}
                     
                         <!-- Using the formset -->
-                        {{ form.as_div }}
+                        {{ form|crispy }}
                         
                     
                 </div>

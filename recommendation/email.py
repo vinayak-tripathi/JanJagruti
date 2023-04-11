@@ -39,7 +39,7 @@ def send_emails(users_ids):
                     }]}
             
     message.template_id = 'd-555cead9c7e949df82ea7559b2efe853'
-    sendgrid_client = SendGridAPIClient('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') 
+    sendgrid_client = SendGridAPIClient('') 
     # response = sendgrid_client.send(message)
     
     try:

@@ -57,15 +57,15 @@
               <a class="nav-link" href="{% url 'editor'%}"> Home </a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" href="{% url 'updatescheme' %}" role="button" data-toggle="dropdown" aria-haspopup="true"
+              <a class="nav-link" href="{% url 'updateschemeList' %}" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">Edit Schemes<i class="ti-angle-down ml-1"></i>
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'updatescheme' %}">Update Schemes</a>
+                <a class="dropdown-item" href="{% url 'updateschemeList' %}">Update Schemes</a>
                 <a class="dropdown-item" href="{% url 'addscheme' %}">Add Scheme</a>
                 <a class="dropdown-item" href="{% url 'addstate' %}">Add State</a>
                 <a class="dropdown-item" href="{% url 'addministry' %}">Add Ministry</a>
-                <a class="dropdown-item" href="post-elements.html">Add Category</a>
+                {% comment %} <a class="dropdown-item" href="post-elements.html">Add Category</a> {% endcomment %}
               </div>
             </li>
             <li class="nav-item">
@@ -74,12 +74,21 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">Editor Jobs</a>
             </li>
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">Update News</a>
+            </li> {% endcomment %}
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="{% url 'updateschemeList' %}" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">Edit News<i class="ti-angle-down ml-1"></i>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'updatenewsList' %}">Update News</a>
+                <a class="dropdown-item" href="{% url 'addnews' %}">Add News</a>
+              </div>
             </li>
             </ul>
             <span class="nav-item dropdown mr-5">
-            <a class="nav-link" href="{% url 'updatescheme' %}" role="button" data-toggle="dropdown" aria-haspopup="true"
+            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false"><i class="ti-user"></i>
                 </a>
                 <div class="dropdown-menu">

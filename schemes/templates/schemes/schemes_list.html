@@ -1,40 +1,63 @@
-{% extends "schemes/base.html" %} {% block content %}
+{% extends "schemes/base.html" %} 
+{% load my_tags %}
+{% load crispy_forms_tags %}
+{% block content %}
 <section class="mt-4">
   <div class="container">
     <div class="row">
       <aside class="col-lg-4 order-1 order-lg-1">
+        <div class="widget mb-3">
+          <div class="row">
+            <div class="col">
+              <h4>Filter By <i class='h5 ti-filter'></i></h4>
+            </div>
+            <div class='col text-right'>
+              {% if has_filter %}
+                  <a href={{request.path}}>Clear all filters</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <form method="get">
         <!-- Search -->
-        <div class="widget">
-          <h5 class="widget-title"><span>Search</span></h5>
-          <form class="widget-search">
-            <input
-              id="search-area"
-              name="search-area"
-              type="search"
-              placeholder="Type &amp; Hit Enter..."
-              value="{{search_input}}"
-            />
-            <button type="submit"><i class="ti-search"></i></button>
-          </form>
-        </div>
-        {% comment %} <form method="get">
-          {{ filter.form }}
-          <button class="btn btn-sm btn-danger" type="submit">Submit</button>
-        </form> {% endcomment %}
-        <!-- categories -->
-        <div class="widget">
-          <h5 class="widget-title"><span>Categories</span></h5>
-          <ul class="list-unstyled widget-list">
-            {% for cat in category%}
-
-            <li>
-              <a href="{% url 'category' cat.slug %}" class="d-flex"
-                >{{cat}}</a>
-            </li>
-            {% endfor %}
+          <div class="widget">
             
-          </ul>
-        </div>
+            <h5 class="widget-title"><span>Search</span></h5>
+            {{ filter.form.search|as_crispy_field }}
+
+            {% comment %} <form class="widget-search">
+              <input
+                id="search"
+                name="search"
+                type="search"
+                placeholder="Type &amp; Hit Enter..."
+                value="{{search_input}}"
+              />
+              <button type="submit"><i class="ti-search"></i></button>
+            </form> {% endcomment %}
+          </div>
+          
+            {% comment %} {{ filter.form|crispy }} {% endcomment %}
+            
+          <!-- categories -->
+          <div class="widget">
+            <h5 class="widget-title"><span>Categories</span></h5>
+            {{ filter.form.category|as_crispy_field }}
+            {% comment %} <button class="btn btn-sm btn-danger" type="submit">Submit</button> {% endcomment %}
+          </div>
+          <div class="widget">
+            <h5 class="widget-title"><span>Ministries</span></h5>
+            {{ filter.form.ministry|as_crispy_field }}
+            {% comment %} <button class="btn btn-sm btn-danger" type="submit">Submit</button> {% endcomment %}
+          </div>
+          <div class="widget">
+            <h5 class="widget-title"><span>State</span></h5>
+            {{ filter.form.state|as_crispy_field }}
+            {% comment %} {{ filter.form.tags|as_crispy_field }} {% endcomment %}
+            <button class="btn btn-sm btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+        
         <!-- tags -->
         <div class="widget">
           <h5 class="widget-title"><span>Tags</span></h5>
@@ -43,6 +66,7 @@
             <li class="list-inline-item"><a href="{% url 'tagged' tag.slug %}">{{tag}}</a></li>
             {% endfor %}
           </ul>
+          
         </div>
         <!-- latest post -->
         <div class="widget">
@@ -50,18 +74,14 @@
           <!-- post-item -->
           <ul class="list-unstyled widget-list">
             {% for n in latestNews %}
-                <li class="media widget-post align-items-center">
-                  <a 
-                  {% comment %} href="{% url 'news' new1 %}" {% endcomment %}
-                  >
-                  <img loading="lazy" class="mr-3" src="{{ n.image.url }}">
-                  </a>
-                  <div class="media-body">
-                    <h6 class="h6 mb-0"><a href="#">{{n.headline}}
-                    </a></h6>
-                    <small>{{ n.date|date:"M d, Y" }}</small>
-                  </div>
-                </li>
+              <li class="media widget-post align-items-center">
+                <img loading="lazy" class="mr-3" src="{{ n.image.url }}">
+                <div class="media-body">
+                  <h6 class="h6 mb-0"><a href="{% url 'newsdetail' n.slug %}">{{n.headline}}
+                  </a></h6>
+                  <small>{{ n.date|date:"M d, Y" }}</small>
+                </div>
+              </li>
             {% endfor%}
           </ul>
         </div>
@@ -137,41 +157,42 @@
         {% endif%}
        </div>
        <style>
-        
-.pagination{
-  padding: 30px 0;
-}
+        .pagination{
+          padding: 30px 0;
+        }
 
-.pagination ul{
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
+        .pagination ul{
+          margin: 0;
+          padding: 0;
+          list-style-type: none;
+        }
 
-.pagination a{
-  display: inline-block;
-  padding: 10px 18px;
-  color: #222;
-}
+        .pagination a{
+          display: inline-block;
+          padding: 10px 18px;
+          color: #222;
+        }
 
-/* ONE */
-.p1 a.is-active{
-  background-color: #ce8460;
-  border-radius: 100%;
-  color: #fff;
-  opacity:1;
-}
-
+        /* ONE */
+        .p1 a.is-active{
+          background-color: #ce8460;
+          border-radius: 100%;
+          color: #fff;
+          opacity:1;
+        }
+        .invalid-feedback{
+          display:none !important
+        }
        </style>
        
 
        <div class="">
         <div class="pagination p1">
-          <ul>
+          
         {% if is_paginated %}
-          {% if search_input == '' %}
+          <ul>
             {% if page_obj.has_previous %}
-              <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">
+              <a href="?{% param_replace page=page_obj.previous_page_number %}" class="btn btn-outline-primary">
                 <li><i class="ti-angle-left"></i></li>
               </a>
               {% else %}
@@ -180,54 +201,30 @@
             {% endif %}
             {% for num in page_obj.paginator.page_range %}
               {% if page_obj.number == num %}
-              <a href="?page={{ num }}" class="btn btn-outline-primary" style="background-color:#ce8460;color:#fff">
-                <li>{{page_obj.number}}</li>
-              </a>
+                <a href="?{% param_replace page=num %}" class="btn btn-outline-primary" style="background-color:#ce8460;color:#fff">
+                  <li>{{page_obj.number}}</li>
+                </a>
               {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
-              <a href="?page={{ num }}" class="btn btn-outline-primary">{{num}}
-              </a>
+                <a href="?{% param_replace page=num %}" class="btn btn-outline-primary">{{num}}
+                </a>
               {% endif %}
             {% endfor %}
             {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">
-              <li><i class="ti-angle-right"></i></li>
-            </a>
+              <a href="?{% param_replace page=page_obj.next_page_number %}" class="btn btn-outline-primary">
+                <li><i class="ti-angle-right"></i></li>
+              </a>
             {% else %}
               <a href="" class="btn btn-outline-primary disabled">
-              <li><i class="ti-angle-right"></i></li>
-            </a>
-            {% endif %}
-          {% else %}
-          {% if page_obj.has_previous %}
-              <a href="?search-area={{search_input}}&page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">
-                <li><i class="ti-angle-left"></i></li>
+                <li><i class="ti-angle-right"></i></li>
               </a>
-              {% else %}
-              <a href="" class="btn btn-outline-primary disabled">
-              <li><i class="ti-angle-left"></i></li></a>
             {% endif %}
-            {% for num in page_obj.paginator.page_range %}
-              {% if page_obj.number == num %}
-              <a href="?search-area={{search_input}}&page={{ num }}" class="btn btn-outline-primary" style="background-color:#ce8460;color:#fff">
-                <li>{{page_obj.number}}</li>
-              </a>
-              {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
-              <a href="?search-area={{search_input}}&page={{ num }}" class="btn btn-outline-primary">{{num}}
-              </a>
-              {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-            <a href="?search-area={{search_input}}&page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">
-              <li><i class="ti-angle-right"></i></li>
-            </a>
-            {% else %}
-              <a href="" class="btn btn-outline-primary disabled">
-              <li><i class="ti-angle-right"></i></li>
-            </a>
-            {% endif %}
-            {% endif %}
+          </ul>
+          {% comment %} <div>
+            <br>
+          Page {{ page_obj.number }} of {{ paginator.num_pages }}
+          </div> {% endcomment %}
         {% endif %}
-        </ul>
+        
       </div>
       
     </div>

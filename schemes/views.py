@@ -7,7 +7,7 @@ from django.views.generic import (
 )
 
 from news.models import News
-
+from .filters import ListingFilter
 from .models import (
     Schemes,
     Tags,
@@ -44,26 +44,35 @@ class SchemeListView(ListView):
     context_object_name = 'schemes'
     ordering = ['uploadDate']
     paginate_by = 8
-    queryset = model.objects.all()
-
+    # queryset = model.objects.all()
+    filterset_class = ListingFilter
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        search_input = self.request.GET.get('search-area') or ''
+        # print(self.get_queryset())
+        search_input = self.request.GET.get('search') or ''
         context['title'] = 'Search Schemes'
-        category_tags = Schemes.category.most_common()
+        # category_tags = Schemes.category.most_common()
         tags = Schemes.tags.most_common()[:7]
         context['tags'] = tags
-        context['category'] = category_tags
-        context['search_input'] = search_input
-        
+        # context['category'] = category_tags
+        has_filter = any(field in self.request.GET for field in 
+                set(self.filterset.get_fields()))
+        # context['search_input'] = search_input
+        # user_list= self.get_queryset()
+        # user_filter = ListingFilter(self.request.GET, queryset=user_list)
+        context['filter'] = self.filterset
+        context['has_filter']=has_filter
         return context
 
     def get_queryset(self):
         # user = get_object_or_404(User, username=self.kwargs.get('username'))
-        search_input = self.request.GET.get('search-area') or ''
-        return Schemes.schemeManager.active().filter(Q(details__icontains=search_input) | Q(eligibility__icontains=search_input)).order_by('-uploadDate')
-
+        # search_input = self.request.GET.get('search') or ''
+        queryset = Schemes.schemeManager.active().order_by('-uploadDate')
+        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        # Return the filtered queryset
+        return self.filterset.qs
+        # return Schemes.schemeManager.active().filter(Q(details__icontains=search_input) | Q(eligibility__icontains=search_input)).order_by('-uploadDate')
+        
 
 class SchemeDetailView(DetailView):
     model = Schemes
@@ -85,15 +94,15 @@ class SchemeDetailView(DetailView):
 
         return context
     
-def tagged(request, slug):
-    tag = get_object_or_404(Category, slug=slug)
-    # Filter posts by tag name
-    posts = Schemes.schemeManager.active().filter(category=tag)
-    context = {
-        'tag': tag,
-        'schemes': posts,
-    }
-    return render(request, 'schemes/schemes_list.html', context)
+# def tagged(request, slug):
+#     tag = get_object_or_404(Category, slug=slug)
+#     # Filter posts by tag name
+#     posts = Schemes.schemeManager.active().filter(category=tag)
+#     context = {
+#         'tag': tag,
+#         'schemes': posts,
+#     }
+#     return render(request, 'schemes/schemes_list.html', context)
 
 
 class CategoryView(ListView):
@@ -113,6 +122,7 @@ class CategoryView(ListView):
         # print(self.kwargs)
         self.cat = get_object_or_404(Category, slug=self.kwargs['slug'])
         posts = Schemes.schemeManager.active().filter(category=self.cat)
+
         return posts
 
 class MinistryList(ListView):
@@ -211,19 +221,29 @@ class TaggedView(ListView):
     template_name = 'schemes/schemes_list.html'
     context_object_name = 'schemes'
     paginate_by = 8
-    queryset = model.objects.all()
+    # queryset = model.objects.all()
+    filterset_class = ListingFilter
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # print(context)
         context['title'] = "Tag-"+str(self.tag)
+        has_filter = any(field in self.request.GET for field in 
+                set(self.filterset.get_fields()))
+        tags = Schemes.tags.most_common()[:7]
+        context['tags'] = tags
+        context['filter'] = self.filterset
+        context['has_filter']=has_filter
         return context
 
     def get_queryset(self):
         # print(self.kwargs)
         self.tag = get_object_or_404(Tags, slug=self.kwargs['slug'])
-        print(self.kwargs['slug'], self.tag)
-        posts = Schemes.schemeManager.active().filter(tags=self.tag)
+        # print(self.kwargs['slug'], self.tag)
+        queryset = Schemes.schemeManager.active().filter(tags=self.tag)
+        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        # Return the filtered queryset
+        return self.filterset.qs
         # print(posts)
         return posts
 

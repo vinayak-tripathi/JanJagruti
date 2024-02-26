@@ -28,22 +28,24 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
   <!--Favicon-->
-  <link rel="shortcut icon" href="{% static 'images/logo1.jpg' %}" type="image/x-icon" />
-  <link rel="icon" href="{% static 'images/logo1.jpg'%}" type="image/x-icon" />
+  <link rel="shortcut icon" href="{% static 'images/JanJagrutiInitial.png'%}" type="image/x-icon" />
+  <link rel="icon" href="{% static 'images/JanJagrutiInitial.png'%}" type="image/x-icon" />
 
   {% if title %}
   <title>{{ title }}</title>
   {% else %}
   <title>JanJagruti</title>
   {% endif %}
+  
 </head>
 
 <body>
-  <header class="sticky-top bg-white border-bottom border-default">
+  <header class="sticky-top bg-white border-bottom border-default shadow-sm">
     <div class="container">
+      
       <nav class="navbar navbar-expand-lg navbar-white">
         <a class="navbar-brand" href="{% url 'home'%}">
-          <img class="img-fluid" width="50px" src="{% static 'images/logo1.jpg'%}" alt="Logo" />
+          <img class="img-fluid" src="{% static 'images/JanJagrutiLogo.png'%}" alt="Logo" style="width: 68px;">
         </a>
         <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
           <i class="ti-menu"></i>
@@ -51,25 +53,14 @@
 
         <div class="collapse navbar-collapse text-center" id="navigation">
           <ul class="navbar-nav mr-auto">
+            
             <li class="nav-item">
               <a class="nav-link" href="{% url 'home'%}"> Home </a>
-              {% comment %}
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="index-full.html">Homepage Full Width</a>
-                <a class="dropdown-item" href="index-full-left.html">Homepage Full With Left Sidebar</a>
-                <a class="dropdown-item" href="index-full-right.html">Homepage Full With Right Sidebar</a>
-                <a class="dropdown-item" href="index-list.html">Homepage List Style</a>
-                <a class="dropdown-item" href="index-list-left.html">Homepage List With Left Sidebar</a>
-                <a class="dropdown-item" href="index-list-right.html">Homepage List With Right Sidebar</a>
-              </div>
-              {% endcomment %}
+              
             </li>
             
             <li class="nav-item">
               <a class="nav-link" href="{% url 'schemes' %}">Schemes</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">Subsidy</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">Tender</a>
@@ -78,38 +69,34 @@
               <a class="nav-link" href="{% url 'about' %}">Jobs</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">Events</a>
+              <a class="nav-link" href="{% url 'news' %}">News</a>
             </li>
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
               <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
-            {% comment %}
+            </li> {% endcomment %}
+            
             <li class="nav-item dropdown">
               <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">Pages <i class="ti-angle-down ml-1"></i>
+                aria-expanded="false">About <i class="ti-angle-down ml-1"></i>
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="author.html">Author</a>
-                <a class="dropdown-item" href="post-details-1.html">Post Details 1</a>
-                <a class="dropdown-item" href="post-details-2.html">Post Details 2</a>
-                <a class="dropdown-item" href="post-elements.html">Post Elements</a>
-                <a class="dropdown-item" href="privacy-policy.html">Privacy Policy</a>
-                <a class="dropdown-item" href="terms-conditions.html">Terms Conditions</a>
+                <a class="dropdown-item" href="{% url 'about' %}">About Us</a>
+                <a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a>
               </div>
             </li>
-            {% endcomment %}
+    
           </ul>
 
-          <select class="m-2 border-0" id="select-language">
+          {% comment %} <select class="m-2 border-0" id="select-language">
             <option id="en" value="about/" selected>En</option>
             <option id="fr" value="fr/about/">Hi</option>
           </select>
           <button id="" class="search-btn">
             <i class="ti-user"></i>
-          </button>
+          </button> {% endcomment %}
 
           <!-- search -->
-          <!-- <div class="search px-4">
+          {% comment %} <div class="search px-4">
               <button id="searchOpen" class="search-btn">
                 <i class="ti-search"></i>
               </button>
@@ -126,8 +113,8 @@
                 <button id="searchClose" class="search-close">
                   <i class="ti-close text-dark"></i>
                 </button>
-              </div> -->
-        </div>
+              </div>
+        </div> {% endcomment %}
     </div>
     </nav>
     </div>
@@ -137,9 +124,9 @@
     <div class="row justify-content-md-center">
       {% endcomment %}
       <div>
-        <div class="py-2 mt-20 bg-green-50 mb-8">
+        {% comment %} <div class="py-2 mt-20 bg-green-50 mb-8">
           <div class="container px-4 lg:px-0 mx-auto"></div>
-        </div>
+        </div> {% endcomment %}
         <div class="container">
         {% if messages %} {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">{{ message }}</div>
@@ -156,13 +143,13 @@
       <div class="row justify-content-between">
         <div class="col-md-3 mb-4">
           <a class="mb-4 d-block" href="{% url 'home'%}">
-            <img class="img-fluid" width="150px" src="{% static 'images/logo1.jpg'%}" alt="Janjagurati"
-              style="width: 100px; height: 100px" />
+            <img class="img-fluid" src="{% static 'images/JanJagrutiNav1.png'%}" alt="Janjagurati"
+              style="width: 250px; height: 75px" />
           </a>
           <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua.
+            Sardar Patel Institute
+            of Technology,
+            Bhavans Campus, Old D N Nagar, Munshi Nagar, Andheri West, Mumbai, Maharashtra 400058
           </p>
         </div>
 
@@ -179,10 +166,9 @@
         <div class="col-lg-2 col-md-3 col-6 mb-4">
           <h6 class="mb-4">Social Links</h6>
           <ul class="list-unstyled footer-list">
-            <li><a href="#">facebook</a></li>
-            <li><a href="#">twitter</a></li>
-            <li><a href="#">linkedin</a></li>
-            <li><a href="#">github</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Linkedin</a></li>
           </ul>
         </div>
 

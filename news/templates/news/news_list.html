@@ -1,0 +1,108 @@
+{% extends "schemes/base.html" %}
+{% block content %}
+<section class="mt-4">
+<div class="container">
+    <div class="row">
+      <aside class="col-lg-4 order-2 order-lg-1">
+        <!-- latest post -->
+        <div class="widget">
+          <h5 class="widget-title"><span>Latest News</span></h5>
+          <!-- post-item -->
+          <ul class="list-unstyled widget-list">
+            {% for n in latestNews %}
+                <li class="media widget-post align-items-center">
+              
+                  <img loading="lazy" class="mr-3" src="{{ n.image.url }}">
+                
+                  <div class="media-body">
+                    <h6 class="h6 mb-0">
+                        <a                  href="{% url 'newsdetail' n.slug %}" 
+                        >
+                            {{n.headline}}
+                    </a></h6>
+                    <small>{{ n.date|date:"M d, Y" }}</small>
+                  </div>
+                </li>
+            {% endfor%}
+          </ul>
+        </div>
+      </aside>
+      <div class="col-lg-8 order-1 order-lg-2 mb-5 mb-lg-0 ">
+      <div>
+
+        <h6> We have found <strong style="color:#ce8460;font-size:17px">{{page_obj.paginator.count}}</strong> news </h6>
+        <hr>
+        {% for new in news %}
+        <article class="row mb-3 shadow-sm border rounded-lg">
+  
+        
+          <div class="col-md-12 mb-3 mt-3">
+
+           <div class="row-md">
+            <div class="media widget-post align-items-center mb-2">
+
+            <img loading="lazy" class="mr-3" width="50px" src="{{ new.image.url }}">
+            <h4>
+              <a class="post-title text-primary" href="{% url "newsdetail" new.slug%}"
+                >{{new.headline}}</a
+              >
+            </h4>
+        </div>
+           </div>
+           
+            <ul class="list-inline post-meta mb-2">
+                <li class="list-inline-item">
+                   <strong>Date :</strong>  {{new.date|date:"M d, Y"}}
+                </li>
+             
+
+</ul>
+            <p class="h6">{{ new.details|slice:":255" }}
+                {% if new.details|length > 255 %}
+                <span>...</span>
+                {% endif %}
+            </p>
+
+            <div class="d-flex justify-content-between">
+              <div class=' flex items-center  gap-4  justify-between items-center !justify-start !gap-1 flex-wrap'>
+                <h6>{% for tag in new.tags.all %}
+                  <a href="{% url 'tagged' tag.slug %}" class="badge bg-secondary bg-lighten-md text-light hover:shadow-md mr-2 mt-1 cursor-pointer " style="font-size:inherit">{{ tag }}</a>
+                  {% endfor %}
+                </h6>
+              </div>
+                <div class="flex-col self-end align-self-center">
+                  <a href="{% url "newsdetail" new.slug%}" class="btn pt-1 pb-1 btn-outline-primary ml-auto mr-3">
+                    More Details
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-blue-900 cursor-pointer mr-2 opacity-50 cursor-not-allowed" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                      <path fill="none" d="M0 0h24v24H0V0z"></path>
+                      <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"></path>
+                    </svg>
+                  </a>
+                </div>
+            
+            </div>
+          </div>
+        
+        </article>
+        
+        {% endfor %}
+        {% if news|length < 1 %}
+          <div id="mainC " class='justify-content-sm-center col-lg-8 order-1 order-lg-2 mb-5 mb-lg-0'>
+            <div class="container">
+              <div class= 'row' style='justify-content: center'>
+
+              <div class="not_found ">
+                <i class='ti-face-sad'></i>
+              
+              </div> 
+            </div>
+              <h3>No news found</h3>
+            </div>
+    
+          </div>
+        {% endif%}
+       </div>
+    </div>
+</div>
+</section>
+{% endblock content %}

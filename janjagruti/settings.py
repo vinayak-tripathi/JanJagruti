@@ -37,13 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'schemes',
+    'schemes.apps.SchemesConfig',
     'crispy_forms',
+    "crispy_bootstrap5",
+    'django_filters',
+    'ckeditor',
     'editor',
-    # 'ratings'
-    # 'taggit'
+    'profiles',
+    'news',
+    'recommendation'
 ]
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -67,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'news.news_context_processors.loadTopThreeNews',
             ],
         },
     },
@@ -78,13 +86,22 @@ WSGI_APPLICATION = 'janjagruti.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'janjagruti$default',
+#         'USER': 'janjagruti',
+#         'PASSWORD':'Nothing@etrx2023',
+#         'HOST': 'janjagruti.mysql.pythonanywhere-services.com',
+#         'PORT': '3306',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'sqlite.db',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

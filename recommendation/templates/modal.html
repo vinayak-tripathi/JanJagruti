@@ -1,0 +1,20 @@
+<div class="modal fade" id="myEdit" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User Profile</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label><b>Email Id: </b></label> <span class = "">{{instance.email }}</span><br>
+                <label><b>Gender: </b></label> <span class = "">{{instance.get_gender_display }}</span><br>
+                <label><b>Martial Status: </b></label> <span class = "">{{instance.get_martial_status_display }}</span><br>
+                <label><b>State: </b></label> <span class = "">{{instance.state.name }}</span><br>
+                <label><b>Caste: </b></label> <span class = "">{{instance.get_caste_display }}</span><br>
+            </div>
+            <div class="modal-footer">
+                <button  value="" type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+  </div>

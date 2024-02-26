@@ -1,0 +1,50 @@
+{% extends "schemes/base.html" %} {% block content %}
+
+<section class="section-xs">
+  <div class="container">
+    <h3 class="h3 mb-30">
+      Find schemes based on State
+      <!-- <span>Powered by Technology</span> -->
+    </h3>
+    <div class="widget">
+      <h5 class="widget-title"><span>Search</span></h5>
+      <form  class="widget-search">
+        <input
+        id="search-query"
+        name="search-query"
+        type="search"
+        placeholder="Type &amp; Hit Enter..."
+        value="{{search_input}}"
+        />
+        <button type="submit"><i class="ti-search"></i></button>
+      </form>
+    </div>
+    <div class="grid">
+      {% for state in states%}
+      {% if state.nstate != 0 %}
+        <article class="border border-default article_main">
+          <a href="{%url 'state' state.name%}">
+          <div class="article_img">
+            <div class="inner_element">
+              <img src = "{{state.image}}" class="img-fluid img-thumbnail shadow-sm">
+            </div>
+          </div>
+          <div class="text">
+            {% if mstate.nstate > 1 %}
+            <p>{{state.nstate}} Schemes</p>
+            {% else %}
+            <p>{{state.nstate}} Scheme</p>
+            {% endif %}
+
+            <h6>{{state.name}}</h6>
+            {% comment %} <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> {% endcomment %}
+          </div>
+        </a>
+        </article>
+      {% endif %}
+    {% endfor %}
+    </div>
+  </div>
+  
+</section>
+{% endblock content %}

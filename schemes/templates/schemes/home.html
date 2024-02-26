@@ -3,7 +3,6 @@
 
 <section class="section-xs">
     <div class="row" style="justify-content: space-around;">
-
       <div class="col-lg-6 flex_style  mb-5 mb-lg-0">
         <article class="row mb-5">
           <div class="col-12">
@@ -22,187 +21,101 @@
         <div class="widget">
           <h5 class="widget-title"><span>Latest News</span></h5>
           <!-- post-item -->
+          
           <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a 
-              {% comment %} href="{% url 'news' new1 %}" {% endcomment %}
-              >
-                <img loading="lazy" class="mr-3" src="{% static 'images/post/post-6.jpg'%}">
-              </a>
-              <div class="media-body">
-                <h6 class="h6 mb-0"><a href="post-elements.html">2019 ESF England Case Study Booklet
-                </a></h6>
-                <small>March 15, 2019</small>
-              </div>
-            </li>
-          </ul>
-          <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a href="post-elements.html">
-                <img loading="lazy" class="mr-3" src="{% static 'images/post/post-6.jpg'%}">
-              </a>
-              <div class="media-body">
-                <h6 class="h6 mb-0"><a href="post-elements.html">2019 ESF England Case Study Booklet
-                </a></h6>
-                <small>March 15, 2019</small>
-              </div>
-            </li>
-          </ul> <ul class="list-unstyled widget-list">
-            <li class="media widget-post align-items-center">
-              <a href="post-elements.html">
-                <img loading="lazy" class="mr-3" src="{% static 'images/post/post-6.jpg'%}">
-              </a>
-              <div class="media-body">
-                <h6 class="h6 mb-0"><a href="post-elements.html">2019 ESF England Case Study Booklet
-                </a></h6>
-                <small>March 15, 2019</small>
-              </div>
-            </li>
+            {% for n in latestNews %}
+              <li class="media widget-post align-items-center">
+                <img loading="lazy" class="mr-3" src="{{ n.image.url }}">
+                <div class="media-body">
+                  <h6 class="h6 mb-0"><a href="{% url 'newsdetail' n.slug %}">{{n.headline}}
+                  </a></h6>
+                  <small>{{ n.date|date:"M d, Y" }}</small>
+                </div>
+              </li>
+            {% endfor%}
           </ul>
         </div>
       </div>
     </div>
 
     <div class="row" style="justify-content: space-between;">
-      <div class="col-lg-6 flex_style ">
+      <div class="col-lg-6">
+        
         <h6 class="section__title mb-30 h4">
-          Find schemes based
-          on State
-          <!-- <span>Powered by Technology</span> -->
+          <span>Find schemes based
+            on State</span>
         </h6>
         <!-- <p class="section__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sapiente
           alias
           cum vel numquam?</p> -->
         <div class="container">
           <div class="grid mb-3">
-            <article class="border border-default article_main">
-              <div class="article_img">
-                <div class="inner_element">
+            {% for state in states%}
+              {% if state.nstate != 0 %}
+                <article class="border border-default article_main">
+                  <a href="{%url 'state' state.name%}">
+                  <div class="article_img">
+                    <div class="inner_element">
+                      <img src = "{{state.image}}" class="img-fluid img-thumbnail shadow-sm">
+                    </div>
+                  </div>
+                  <div class="text">
+                    {% if mstate.nstate > 1 %}
+                    <p>{{state.nstate}} Schemes</p>
+                    {% else %}
+                    <p>{{state.nstate}} Scheme</p>
+                    {% endif %}
 
-                </div>
-              </div>
-              <div class="text">
-                <p>10 Schemes</p>
-
-                <h6 class="h6">Seamlessly visualize quality</h6>
-                <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
-              </div>
-            </article>
-            <article class="border border-default article_main">
-              <div class="article_img">
-                <div class="inner_element">
-
-                </div>
-              </div>
-              <div class="text">
-                <p>10 Schemes</p>
-
-                <h6>Seamlessly visualize quality</h6>
-                <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
-              </div>
-            </article>
-            <article class="border border-default article_main">
-              <div class="article_img">
-                <div class="inner_element">
-
-                </div>
-              </div>
-              <div class="text">
-                <p>10 Schemes</p>
-
-                <h6>Seamlessly visualize quality</h6>
-                <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
-              </div>
-            </article>
-            <article class="border border-default article_main">
-              <div class="article_img">
-                <div class="inner_element">
-
-                </div>
-              </div>
-              <div class="text">
-                <p>10 Schemes</p>
-
-                <h6>Seamlessly visualize quality</h6>
-                <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
-              </div>
-            </article>
-           
-
+                    <h6>{{state.name}}</h6>
+                    <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
+                  </div>
+                </a>
+                </article>
+              {% endif %}
+            {% endfor %}
           </div>
           <div class="row flexing">
-            <a href="{%url 'ministry'%}" class="btn btn-outline-primary mr-1" style='text-align: center;'><span class='mr-1' style='text-align: center;'>Explore More</span><i class="ti-arrow-right"> </i></a>
+            <a href="{%url 'stateList' %}" class="btn btn-outline-primary mr-1" style='text-align: center;'><span class='mr-1' style='text-align: center;'>Explore More</span><i class="ti-arrow-right"> </i></a>
           </div>
         </div>
       </div>
-      <div class="col-lg-6 flex_style">
+      <div class="col-lg-6">
         <h6 class="section__title mb-30 h4">
-          Find schemes based
-          on Ministry
-          <!-- <span>Powered by Technology</span> -->
+          
+          <span>Find schemes based
+            on ministry</span>
         </h6>
         <!-- <p class="section__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sapiente
           alias
           cum vel numquam?</p> -->
         <div class="container">
           <div class="grid mb-3">
-            <article class="border border-default article_main">
-              <div class="article_img">
-                <div class="inner_element">
+            {% for ministry in ministries%}
+              {% if ministry.nmini != 0 %}
+                <article class="border border-default article_main">
+                  <a href="{%url 'ministry' ministry.slug%}">
+                  <div class="article_img">
+                    <div class="inner_element">
+                      <img src = "{{ministry.image}}" class="img-fluid img-thumbnail shadow-sm">
+                    </div>
+                  </div>
+                  <div class="text">
+                    {% if ministry.nmini > 1 %}
+                    <p>{{ministry.nmini}} Schemes</p>
+                    {% else %}
+                    <p>{{ministry.nmini}} Scheme</p>
+                    {% endif %}
 
-                </div>
-              </div>
-              <div class="text">
-                <p>10 Schemes</p>
-
-                <h6>Seamlessly visualize quality</h6>
-                <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
-              </div>
-            </article>
-            <article class="border border-default article_main">
-              <div class="article_img">
-                <div class="inner_element">
-
-                </div>
-              </div>
-              <div class="text">
-                <p>10 Schemes</p>
-
-                <h6>Seamlessly visualize quality</h6>
-                <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
-              </div>
-            </article>
-            <article class="border border-default article_main">
-              <div class="article_img">
-                <div class="inner_element">
-
-                </div>
-              </div>
-              <div class="text">
-                <p>10 Schemes</p>
-
-                <h6>Seamlessly visualize quality</h6>
-                <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
-              </div>
-            </article>
-            <article class="border border-default article_main">
-              <div class="article_img">
-                <div class="inner_element">
-
-                </div>
-              </div>
-              <div class="text">
-                <p>10 Schemes</p>
-
-                <h6>Seamlessly visualize quality</h6>
-                <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
-              </div>
-            </article>
-          
-
+                    <h6>{{ministry.name}}</h6>
+                    <!-- <a href="https://codepen.io/collection/XdWJOQ/" class="btn btn-primary btn-block">Here's why</a> -->
+                  </div>
+                </a>
+                </article>
+              {% endif %}
+            {% endfor %}
           </div>
           <div class="row flexing">
-            <a href="{%url 'ministry'%}" class="btn btn-outline-primary mr-1" style='text-align: center;'><span class='mr-1' style='text-align: center;'>Explore More</span><i class="ti-arrow-right"> </i></a>
+            <a href="{%url 'ministryList'%}" class="btn btn-outline-primary mr-1" style='text-align: center;'><span class='mr-1' style='text-align: center;'>Explore More</span><i class="ti-arrow-right"> </i></a>
           </div>
         </div>
       </div>
@@ -221,12 +134,18 @@
   <div class="container">
     <div class="grid">
       {% for category in categories%}
-      {% if category.num_times != 0 %}
+      {% comment %} {% if category.num_times != 0 %} {% endcomment %}
       <article class="border border-default article_main">
         <a href="{% url 'category' category.slug %}">
           <div class="article_img">
-            <div class="inner_element">
-
+            <div class="bg-light inner_element">
+              <img src={{category.image}} style="
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              margin: auto;" class="img-fluid img-thumbnail shadow-sm">
             </div>
           </div>
           <div class="text" style="text-align:center">
@@ -241,7 +160,7 @@
           </div>
         </a>
       </article>
-      {% endif %}
+      {% comment %} {% endif %} {% endcomment %}
       {% endfor%}
 
     </div>
@@ -251,68 +170,48 @@
 <hr>
 <section class="section-xs">
   <div class="container">
-
-
-
-
-    <h3 id="collapse" style="margin: 10px;">Frequently Asked Questions</h3>
-    <div class="border border-default collapse-wrapper mb-10"> <a class="d-flex p-2 collapse-head"
-        data-toggle="collapse" href="#collapse-1" role="button">
-        What is Janjagurati ?<i class="ti-plus ml-auto"></i>
-      </a>
-      <div class="collapse" id="collapse-1">
-        <div class="p-2">Janjagurati is an e-Marketplace for Govt. schemes and services. Using
-          Janjagurati
-          you can
-          find various government schemes, check your eligibility, and apply for the schemes.
+    <div class="row" style="justify-content: space-around;">
+      <div class="col-lg-6 flex_style  mb-5 mb-lg-0">
+        <h1 id="collapse" style="margin: 10px;">Frequently Asked Questions</h1>
+      </div>
+      <div class="col-lg-6 flex_style">
+        <div class="border rounded-lg collapse-wrapper mb-10 shadow-sm"> <a class="d-flex p-3 collapse-head"
+          data-toggle="collapse" href="#collapse-1" role="button">
+          <h5>What is Janjagurati ?</h5><i class="pt-2 pr-3 ml-auto ti-plus"></i>
+        </a>
+        <div class="collapse" id="collapse-1">
+          <div class="p-3">Janjagurati is an e-Marketplace for Govt. schemes and services. Using
+            Janjagurati
+            you can
+            find various government schemes, check your eligibility, and apply for the schemes.
+          </div>
         </div>
       </div>
-    </div>
-    <div class="border border-default collapse-wrapper mb-10"> <a class="d-flex p-2 collapse-head"
-        data-toggle="collapse" href="#collapse-2" role="button">
-        How Janjagurati will help common citizens? <i class="ti-plus ml-auto"></i>
-      </a>
-      <div class="collapse" id="collapse-2">
-        <div class="p-2">Janjagurati will reduce the time and effort of citizens in searching for
-          appropriate government schemes.The easy user interface of Janjagurati helps common
-          people a
-          lot
-          in
-          discovering and applying for schemes.</div>
-      </div>
-    </div>
-    <div class="border border-default collapse-wrapper mb-10"> <a class="d-flex p-2 collapse-head"
-        data-toggle="collapse" href="#collapse-3" role="button">
-        Can I apply for the schemes through Janjagurati? <i class="ti-plus ml-auto"></i>
-      </a>
-      <div class="collapse" id="collapse-3">
-        <div class="p-2">For now, the platform shall direct you to the application page of the
-          scheme of
-          your choice.It is envisaged that in the upcoming phases, Janjagurati shall have the
-          feature
-          to
-          apply for schemes / services from within the platform/ app.</div>
-      </div>
-    </div>
-    <div class="border border-default collapse-wrapper mb-10"> <a class="d-flex p-2 collapse-head"
-        data-toggle="collapse" href="#collapse-4" role="button">
-        How does Janjagurati work? How do I check for my eligibility through Janjagurati ? <i
-          class="ti-plus ml-auto"></i>
-      </a>
-      <div class="collapse" id="collapse-4">
-        <div class="p-2">Janjagurati offers a convenient three - step process for the citizens to
-          discover
-          the government schemes for which they are eligible: Step 1 - The user enters his / her
-          attributes such as demographic, income, social details, etc.Step 2 - The Janjagurati
-          findsthe
-          relevant schemes from hundreds of schemes for the user.Step 3 - The user can select from
-          the
-          list of eligible schemes and get more information from the dedicated scheme page with
-          detailed
-          knowledge, FAQs, and application process and traverse to the application URL to apply.
+      <div class="border rounded-lg collapse-wrapper mb-10 shadow-sm"> <a class="d-flex p-3 collapse-head"
+          data-toggle="collapse" href="#collapse-2" role="button">
+          <h5>How Janjagurati will help common citizens?</h5> <i class="pt-2 pr-3 ml-auto ti-plus"></i>
+        </a>
+        <div class="collapse" id="collapse-2">
+          <div class="p-3">Janjagurati will reduce the time and effort of citizens in searching for
+            appropriate government schemes.The easy user interface of Janjagurati helps common
+            people a
+            lot
+            in
+            discovering and applying for schemes.</div>
         </div>
       </div>
-    </div>
-
+      <div class="border rounded-lg collapse-wrapper mb-10 shadow-sm"> <a class="d-flex p-3 collapse-head"
+          data-toggle="collapse" href="#collapse-3" role="button">
+          <h5>Can I apply for the schemes through Janjagurati? </h5><i class="pt-2 pr-3 ml-auto ti-plus"></i>
+        </a>
+        <div class="collapse" id="collapse-3">
+          <div class="p-3">For now, the platform shall direct you to the application page of the
+            scheme of
+            your choice.It is envisaged that in the upcoming phases, Janjagurati shall have the
+            feature
+            to
+            apply for schemes / services from within the platform/ app.</div>
+        </div>
+      </div>
 </section>
 {% endblock content %}

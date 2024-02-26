@@ -1,0 +1,66 @@
+{% extends "editor/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> {% endcomment %}
+        <link rel="stylesheet" href="/static/css/tagsinput.css" />
+    <div class="content-section">
+        <div class="row">
+            <div class="col col-lg-2"><h5 class="mb-4">
+              <a href="{% url "updateschemeList"%}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg> Back </a>
+          </h5></div>
+            </div>
+        <form method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <h4>
+              {% if title %}
+                <legend class="border-bottom mb-4">Edit - {{title}}</legend>
+              {% else %}
+                <legend class="border-bottom mb-4">Add Scheme</legend>
+              {% endif %}
+              </h4>
+                <div class="row justify-content-md-center">
+                  <div class="col col-lg-8">
+                      {{form.media}}
+                      {{ form|crispy }}
+                  </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-3">
+                    <button class="btn btn-success btn-block" type="submit">Post</button>
+                  </div>
+                  <div class="col-3">
+                    <a href="{% url "deletescheme" slug%}" class="btn btn-danger btn-block">
+                      Delete
+                      <i class="ti-trash"></i>
+                    </a>
+                  </div>
+                </div>
+            </fieldset>
+            {% comment %} <div class="row">
+                <div class="col-sm">
+                  One of three columns
+                </div>
+                <div class="col-sm">
+                  One of three columns
+                </div>
+                <div class="col-sm">
+                  One of three columns
+                </div>
+              </div>
+            <div class="form-group"> {% endcomment %}
+                
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="/static/js/tagsinput.js"></script>
+    <script>
+    $("#post-form").submit(function(e){
+        e.preventDefault();
+        });</script>
+{% endblock content %}

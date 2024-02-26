@@ -1,0 +1,66 @@
+{% extends "schemes/base.html" %}
+{% block content %}
+<section class="section-sm">
+    <div class="container">
+        <div class="row">
+          
+            <div class="col-md-12 mb-3"> 
+                <div class="h3 font-weight-bold uppercase underline ft-wt">
+                    {{object.headline}}                <a href={{object.source}} class="text-xs ml-1"><i class="ti-share"> </i></a>
+
+                </div>
+                <ul class="list-inline post-meta mb-2">
+                    <li class="list-inline-item">
+                       <strong>Date :</strong>  {{object.date|date:"M d, Y"}}
+                    </li>
+                 
+    
+    </ul>
+                  
+            </div>
+
+            <div class="col">
+                <div class="content mb-5">
+       <p>
+        <img class="img-fluid w-40 mb-3 mr-4 rounded-lg"
+        src="{{object.image.url}} " />
+        <p class="text-4xl" id="long-paragraph">     
+            {{object.details}}</p> 
+       </p>             
+                 
+                </div>
+              </div>
+        </div>
+    </div>
+
+</section>
+<style>
+    {% comment %} img {
+      float: left;
+      border: 1px dotted black;
+    }p{
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .ft-wt{
+        
+        color: #000;
+    } {% endcomment %}
+    </style>
+    <script>
+        const longParagraph = document.getElementById("long-paragraph");
+        const words = longParagraph.innerText.split(" ");
+        let paragraphs = [];
+      
+        let currentParagraph = "";
+        for (let i = 0; i < words.length; i++) {
+          if ((i > 0 && i % 180 === 0) || i === words.length - 1) {
+            paragraphs.push("<p>" + currentParagraph.trim() + "</p>");
+            currentParagraph = "";
+          }
+          currentParagraph += words[i] + " ";
+        }
+      
+        longParagraph.innerHTML = paragraphs.join("");
+      </script>
+{% endblock content %}
